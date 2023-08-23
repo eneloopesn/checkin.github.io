@@ -265,7 +265,7 @@
     </main>
     <script>
         //部屬連結放這裡
-        var url = "https://script.google.com/macros/s/AKfycbznB38lSadM6Q7gAKscNHDWL_xdJmw2jP4MNcxVI9UhReOOYjTUhlyWgCNXmky0i5W9Og/exec";
+        var url = "https://script.google.com/macros/s/AKfycbyk1MBF00XLTgmKICLAE_BSMsTkjcxyj0qIVglzmNRWO4anHumOG_bv54X62TieSPL35w/exec";
         const [history, call, add] = ["history", "call", "add"].map(t => document.getElementById(t)), searchA = () => { history.style.opacity = 1, history.style.zIndex = 2, call.style.opacity = add.style.opacity = 0, call.style.zIndex = add.style.zIndex = 1 }, callA = () => { history.style.opacity = add.style.opacity = 0, history.style.zIndex = add.style.zIndex = 1, call.style.opacity = 1, call.style.zIndex = 2 }, addA = () => { history.style.opacity = call.style.opacity = 0, history.style.zIndex = call.style.zIndex = 1, add.style.opacity = 1, add.style.zIndex = 2 }; 
         fetch(url + "?type=list").then(t => t.json()).then(t => { let e = document.getElementById("call"); 
                 e.innerHTML = "", t.forEach((t, n) => { let a = document.createElement("button"); 
