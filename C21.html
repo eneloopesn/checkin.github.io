@@ -283,7 +283,7 @@
 		const status = document.getElementById("status"); 
 		function rollCall(t, e, n) { status.innerHTML = `${t} 簽到中...`; 
 									var a = new Date, a = a.toLocaleString("zh-TW", { year: "numeric", month: "2-digit", day: "2-digit", hour: "numeric", minute: "numeric", second: "numeric", hour12: !0 }).replace("-", "/").replace(" ", " "); 
-									fetch(url + `?type=call&name=${t}&time=${a}&remain=${e}`).then(a => { a.ok ? (status.innerHTML = `${t} 已簽到成功！剩餘課堂：${e - 1}`, document.getElementById("student-" + n).style.backgroundColor = "var(--nord14)") : (status.innerHTML = `${t} 已簽到失敗！剩餘課堂：${e}`, document.getElementById("student-" + n).style.backgroundColor = "var(--nord11)") }).catch(t => { status.innerHTML = `發生錯誤：${t}` }) } const searchBtn = document.querySelector("#history button"), searchInput = document.querySelector("#history input"), historyTableBody = document.querySelector("#history tbody"); 
+									fetch(url + `?type=call&name=${t}&time=${a}&remain=${e}`).then(a => { a.ok ? (status.innerHTML = `${t} 已簽到成功！`, document.getElementById("student-" + n).style.backgroundColor = "var(--nord14)") : (status.innerHTML = `${t} 已簽到失敗！剩餘課堂：${e}`, document.getElementById("student-" + n).style.backgroundColor = "var(--nord11)") }).catch(t => { status.innerHTML = `發生錯誤：${t}` }) } const searchBtn = document.querySelector("#history button"), searchInput = document.querySelector("#history input"), historyTableBody = document.querySelector("#history tbody"); 
 		
 		
 		
