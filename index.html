@@ -1,285 +1,454 @@
 <!DOCTYPE html>
-<html lang="zh-TW">
-
+<html lang="zh-Hant">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>伽苑簽到系統</title>
-    <meta name="theme-color" content="3B4252" />
-    <style>
-        h1 {
-            /* 標題顏色 */
-            color: var(--nord7)
-        }
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>請假補課表單對照</title>
+  <meta name="description" content="依 2026-11-03 六張截圖，左右對照原創版本與抄襲版本。">
+  <style>
+    :root {
+      --bg: #e7eef3;
+      --ink: #122029;
+      --muted: #5c6b76;
+      --paper: #fff;
+      --line: #d3dee6;
+      --orig: #0c6b4d;
+      --orig-bg: #e7f6ef;
+      --copy: #b4233c;
+      --copy-bg: #fdecef;
+      --same: #24527a;
+      --same-bg: #e7f1fa;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: var(--bg);
+      font-family: "Microsoft JhengHei", "PingFang TC", sans-serif;
+      line-height: 1.6;
+    }
+    button, a { font: inherit; color: inherit; }
+    img { max-width: 100%; height: auto; }
+    :focus-visible { outline: 3px solid var(--ink); outline-offset: 2px; }
+    .wrap { width: min(1080px, calc(100% - 28px)); margin: 0 auto; }
 
-        body {
-            /* 背景顏色 */
-            background-color: var(--nord0)
-        }
+    .banner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      background: #10181e;
+      color: #fff;
+    }
+    .banner div { padding: 22px 22px 20px; }
+    .banner .copy { background: #8f1d32; }
+    .banner .orig { background: #0b5c42; }
+    .banner span {
+      display: block;
+      font-size: 12px;
+      letter-spacing: 0.16em;
+      font-weight: 800;
+      opacity: 0.85;
+    }
+    .banner strong { display: block; margin-top: 4px; font-size: clamp(20px, 2.4vw, 30px); line-height: 1.25; }
 
-        body {
-            /* 可選顏色 */
-            --nord0: #2E3440;
-            --nord1: #3B4252;
-            --nord2: #434C5E;
-            --nord3: #4C566A;
-            --nord4: #D8DEE9;
-            --nord5: #E5E9F0;
-            --nord6: #ECEFF4;
-            --nord7: #8FBCBB;
-            --nord8: #88C0D0;
-            --nord9: #81A1C1;
-            --nord10: #5E81AC;
-            --nord11: #BF616A;
-            --nord12: #D08770;
-            --nord13: #EBCB8B;
-            --nord14: #A3BE8C;
-            --nord15: #B48EAD;
-            --black: #000;
-            --line: #4C566A
-        }
+    header.intro { padding: 28px 0 8px; }
+    h1 { margin: 0 0 8px; font-size: clamp(32px, 4vw, 46px); letter-spacing: -0.03em; line-height: 1.1; }
+    .lede { margin: 0; max-width: 68ch; color: var(--muted); }
 
-        main,
-        nav {
-            display: flex
-			
-				
-        }
+    .facts {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      margin: 18px 0 8px;
+    }
+    .facts a {
+      display: block;
+      background: var(--paper);
+      border: 1px solid var(--line);
+      text-decoration: none;
+      padding: 12px;
+      min-height: 100%;
+    }
+    .facts b { display: block; margin-bottom: 4px; }
+    .facts span { color: var(--muted); font-size: 14px; }
 
-        .call button,
-        button:hover {
-            background-color: var(--nord2)
-        }
+    section { padding: 26px 0; }
+    h2 { margin: 0 0 6px; font-size: 28px; }
+    .sub { margin: 0 0 14px; color: var(--muted); }
 
-        button,
-        section>div {
-            background-color: var(--nord1);
-            box-shadow: rgba(0, 0, 0, .2) 0 0 .5rem
-        }
+    .switch { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 10px; }
+    .switch button, .filters button {
+      border: 1px solid var(--ink);
+      background: transparent;
+      padding: 7px 12px;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+    .switch button[aria-selected="true"],
+    .filters button[aria-pressed="true"] { background: var(--ink); color: #fff; }
 
-        main,
-        section>div {
-            padding: 1rem;
-            
-            width: 100%
-        }
+    figure.stage {
+      margin: 0;
+      background: var(--paper);
+      border: 1px solid var(--line);
+    }
+    figure.stage img { display: block; width: 100%; cursor: zoom-in; background: #d7e0e7; }
+    figure.stage figcaption {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 10px 12px;
+      font-size: 14px;
+    }
 
-        footer,
-        footer a {
-            color: var(--nord4)
-        }
+    .filters { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-bottom: 12px; }
+    #count { color: var(--muted); font-size: 14px; }
 
-        .search button,
-        button,
-        input,
-        section>div {
-            box-shadow: rgba(0, 0, 0, .2) 0 0 .5rem
-        }
+    .row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      background: var(--paper);
+      border: 1px solid var(--line);
+      margin-bottom: 10px;
+    }
+    .row[hidden] { display: none; }
+    .row h3 {
+      grid-column: 1 / -1;
+      margin: 0;
+      padding: 8px 12px;
+      font-size: 14px;
+      letter-spacing: 0.04em;
+      background: #f4f7f9;
+      border-bottom: 1px solid var(--line);
+    }
+    .cell { padding: 12px 14px; }
+    .cell + .cell { border-left: 1px solid var(--line); }
+    .cell p { margin: 0; }
+    .who { display: block; font-size: 12px; font-weight: 800; letter-spacing: 0.12em; margin-bottom: 6px; }
+    .orig .who { color: var(--orig); }
+    .copy .who { color: var(--copy); }
+    .orig { background: var(--orig-bg); }
+    .copy { background: var(--copy-bg); }
+    .row.same .orig, .row.same .copy { background: var(--same-bg); }
+    .row.same .who { color: var(--same); }
+    .judge {
+      grid-column: 1 / -1;
+      margin: 0;
+      padding: 8px 12px;
+      border-top: 1px solid var(--line);
+      background: #fff;
+      font-size: 14px;
+    }
 
-        body,
-        button,
-        h2,
-        html {
-            text-align: center
-        }
+    table { width: 100%; border-collapse: collapse; background: var(--paper); font-size: 14px; }
+    th, td { border-bottom: 1px solid var(--line); padding: 8px 10px; text-align: left; vertical-align: top; }
+    th { font-size: 12px; color: var(--muted); letter-spacing: 0.06em; }
+    tr.extra td { background: var(--copy-bg); }
+    .scroll { overflow-x: auto; border: 1px solid var(--line); }
+    code { font-family: Consolas, "Courier New", monospace; font-size: 0.95em; }
 
-        * {
-            padding: 0;
-            margin: 0;
-            box-sizing: border-box;
-            font-family: Arial, "微軟正黑體", Helvetica, sans-serif;
-            color: var(--nord6)
-        }
+    .pair { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .formula {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      padding: 14px;
+      font-size: 22px;
+      line-height: 1.45;
+    }
+    .keep { background: #efe6b8; padding: 0 3px; }
+    .swap { background: #f7c2cb; padding: 0 3px; }
+    details { background: var(--paper); border: 1px solid var(--line); padding: 10px 14px; margin-top: 10px; }
+    details summary { cursor: pointer; font-weight: 700; }
+    details ul { margin: 8px 0 0; }
 
-        body,
-        html {
-            min-height: 100%
-        }
+    .aside {
+      background: #fff8e8;
+      border: 1px solid #ead7a2;
+      padding: 12px 14px;
+    }
 
-        main {
-            flex-direction: column;
-            height: 100vh;
-            height: 100dvh;
-            max-width: 500px;
-            
-            margin: 0 auto
-        }
+    footer { color: var(--muted); font-size: 13px; padding: 8px 0 36px; }
 
-        nav {
-            justify-content: space-between
-        }
+    dialog { width: min(1180px, calc(100vw - 20px)); border: 0; padding: 12px; background: #10181e; color: #fff; }
+    dialog::backdrop { background: rgba(8, 12, 16, 0.84); }
+    dialog img { width: 100%; background: #fff; }
+    dialog menu { display: flex; justify-content: space-between; gap: 12px; margin: 8px 0 0; padding: 0; }
+    dialog button { background: #fff; border: 0; padding: 8px 12px; cursor: pointer; }
 
-        button {
-            display: block;
-            height: 100px;
-            width: 200px;
-            line-height: 50px;
-            border-radius: 1rem;
-            text-decoration: none;
-            border: none;
-            cursor: pointer;
-            transition: background-color .2s ease-in-out
-        }
-
-        #call,
-        .search,
-        footer {
-            display: flex
-				
-        }
-
-        .call button {
-            width: calc(1/4*100% - 1rem);
-            margin: .5rem
-        }
-
-        button:hover {
-            filter: brightness(1.2)
-        }
-
-        button:active {
-            background-color: var(--nord3);
-            filter: brightness(1.5)
-        }
-
-        section {
-            flex-grow: 1;
-            margin: 1rem 0;
-            position: relative
-        }
-
-        footer {
-            justify-content: flex-end;
-            align-items: flex-end
-        }
-
-        section>div {
-            border-radius: 1rem;
-            overflow-x: hidden;
-            overflow-y: auto;
-            position: absolute;
-            height: 100%;
-            transition: opacity .5s ease-in-out
-        }
-
-        #add,
-        #history {
-            opacity: 0
-        }
-
-        #call {
-            z-index: 2;
-            flex-wrap: wrap;
-            justify-content: space-between
-        }
-
-        .search {
-            justify-content: center;
-            align-items: center
-        }
-
-        .search button,
-        input {
-            height: 2rem;
-            width: 50%;
-            border-radius: .5rem;
-            border: transparent;
-            padding: 0 1rem;
-            background-color: var(--nord3);
-            color: var(--nord4)
-        }
-
-        h2,
-        table {
-            width: 100%
-        }
-
-        input:focus {
-            outline: transparent
-        }
-
-        .search button {
-            margin-left: 1rem;
-            width: auto;
-            line-height: 100%
-        }
-
-        table {
-            border-collapse: collapse;
-            margin-top: 1rem
-        }
-
-        tr {
-            border-bottom: 1px solid var(--line)
-        }
-
-        td {
-            padding: .5rem
-        }
-
-        h2 {
-            margin-top: 2rem;
-            font-weight: 600
-        }
-        h4 {
-            margin-top: 0rem;
-            font-size:xx-large;
-            font-weight: 600
-        }
-        #status {
-            margin: .5rem 0 1rem;
-            color: var(--nord13);
-            font-size: 1.2rem
-        }
-    </style>
+    @media (max-width: 800px) {
+      .banner, .facts, .row, .pair { grid-template-columns: 1fr; }
+      .cell + .cell { border-left: 0; border-top: 1px solid var(--line); }
+    }
+    @media print {
+      .switch, .filters, dialog { display: none !important; }
+      .row { break-inside: avoid; }
+    }
+  </style>
 </head>
-
 <body>
-    <main>
-        <h1>伽苑簽到系統</h1>
-        <h2 id="status">簽到</h2>
-        <section>
-           <div id="call">
-           <button onClick="location.href='C1.html'"><h4>(一) 8:30</h4></button>
-           <button onClick="location.href='C2.html'"><h4>(一) 10:00</h4></button>
-           <button onClick="location.href='C3.html'"><h4>(二) 12:10</h4></button>
-           <button onClick="location.href='C4.html'"><h4>(二) 17:50</h4></button>
-           <button onClick="location.href='C5.html'"><h4>(二) 19:10</h4></button>
-           <button onClick="location.href='C6.html'"><h4>(二) 20:30</h4></button>
-           <button onClick="location.href='C7.html'"><h4>(三) 12:10</h4></button>  
-	   <button onClick="location.href='C8.html'"><h4>(三) 17:50</h4></button>   
-           <button onClick="location.href='C9.html'"><h4>(三) 19:10</h4></button>
-           <button onClick="location.href='C10.html'"><h4>(三) 20:30</h4></button>
-           <button onClick="location.href='C11.html'"><h4>(四) 8:30</h4></button>
-           <button onClick="location.href='C12.html'"><h4>(四) 10:00</h4></button>
-           <button onClick="location.href='C13.html'"><h4>(四) 12:10</h4></button>
-           <button onClick="location.href='C14.html'"><h4>(四) 17:50</h4></button>
-           <button onClick="location.href='C15.html'"><h4>(四) 19:10</h4></button>
-           <button onClick="location.href='C16.html'"><h4>(四) 20:30</h4></button>
-           <button onClick="location.href='C17.html'"><h4>(五) 17:50</h4></button>
-           <button onClick="location.href='C18.html'"><h4>(五) 19:10</h4></button>
-		   <!--
-           <button onClick="location.href='C19.html'"><h4>(五) 20:30</h4></button>
-		   -->
-           <button onClick="location.href='C20.html'"><h4>(六) 9:30</h4></button>
-           <button onClick="location.href='C21.html'"><h4>(六) 11:00</h4></button>
-           <button onClick="location.href='C22.html'"><h4>(六) 12:30</h4></button>
-	      
-           <button onClick="location.href='index_J.html'"><h4>伽戰</h4></button>
-           
-        </div>
-        </section>
-            
-                
-        <!--
-        <footer>
-        	<a href="edit-mr.github.io/">毛哥EM</a>製作 | <a href="https://em-tec.github.io/post/roll-call">教學</a>
-        </footer>
-        -->
-    </main>
-    
+  <div class="banner">
+    <div class="copy"><span>抄襲版本 · 左欄</span><strong>伽菀 請假/補課系統</strong></div>
+    <div class="orig"><span>原創版本 · 右欄</span><strong>週一到週六班級, 請假補課登記</strong></div>
+  </div>
 
+  <header class="intro">
+    <div class="wrap">
+      <h1>六張截圖的差異</h1>
+      <p class="lede">2026-11-03 的圖都是左右並排。這一頁把同一位置的文字拆開來對。網址列是兩支表單，可見前段為 <code>1FAIpQLSfffV…</code> 與 <code>1FAIpQLSeTaJyJky…</code>。</p>
+      <div class="facts">
+        <a href="#board"><b>流程相同</b><span>姓名、事由、原班級、請假日、補課週、名額，六步都在。</span></a>
+        <a href="#open"><b>開頭換字</b><span>同一句起手，調課、範例、Linda 被拿掉或改寫。</span></a>
+        <a href="#rule"><b>罰則不同</b><span>都是開課前三小時。逾時從不受理改成扣堂數。</span></a>
+        <a href="#when"><b>日期換月</b><span>10/27 換成 11 月五個週日，名額句從「還有人」改成「尚餘名」。</span></a>
+      </div>
+    </div>
+  </header>
+
+  <section id="shots">
+    <div class="wrap">
+      <h2>截圖</h2>
+      <p class="sub">一次看一張。11:14:13 與 11:14:23 是請假日期的兩次擷取。點圖放大。</p>
+      <div class="switch" role="tablist" aria-label="選擇截圖">
+        <button type="button" role="tab" aria-selected="true" data-src="2026-11-03 111235.png" data-cap="11:12:35　表頭、說明、姓名、請假或補課">表頭</button>
+        <button type="button" role="tab" aria-selected="false" data-src="2026-11-03 111324.png" data-cap="11:13:24　原班級時段">班級</button>
+        <button type="button" role="tab" aria-selected="false" data-src="2026-11-03 111413.png" data-cap="11:14:13　請假日期">請假日</button>
+        <button type="button" role="tab" aria-selected="false" data-src="2026-11-03 111423.png" data-cap="11:14:23　請假日期，同一階段再拍一次">請假日再拍</button>
+        <button type="button" role="tab" aria-selected="false" data-src="2026-11-03 111452.png" data-cap="11:14:52　補課週次">補課週</button>
+        <button type="button" role="tab" aria-selected="false" data-src="2026-11-03 111525.png" data-cap="11:15:25　各時段剩餘名額">名額</button>
+      </div>
+      <figure class="stage">
+        <img id="shot" src="2026-11-03 111235.png" alt="表頭對照：左為伽菀請假補課系統，右為週一到週六班級請假補課登記。">
+        <figcaption><span id="shot-cap">11:12:35　表頭、說明、姓名、請假或補課</span><span>點圖放大</span></figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section id="board">
+    <div class="wrap">
+      <h2>逐項對照</h2>
+      <p class="sub">左紅是抄襲，右綠是原創，跟截圖同一邊。篩選只作用於這些列。</p>
+      <div class="filters" role="toolbar" aria-label="篩選">
+        <button type="button" data-filter="all" aria-pressed="true">全部</button>
+        <button type="button" data-filter="same" aria-pressed="false">相同處</button>
+        <button type="button" data-filter="rename" aria-pressed="false">換字</button>
+        <button type="button" data-filter="rule" aria-pressed="false">規則</button>
+        <button type="button" data-filter="date" aria-pressed="false">時段與日期</button>
+        <span id="count"></span>
+      </div>
+
+      <div id="rows">
+        <article class="row same" id="open" data-kind="same">
+          <h3>填答路徑</h3>
+          <div class="cell copy"><span class="who">抄襲</span><p>填寫學員姓名 → 請假/補課 → 請假學員~原班級 → 請假日期 → 請選擇補課區間 → 各時段名額。分節同樣用返回、繼續。</p></div>
+          <div class="cell orig"><span class="who">原創</span><p>請填寫學員姓名 → 請假或補課 → 學員班級是(1) → 請假日期(2) → 想要補課日期 → 各時段名額。分節用返回、繼續。</p></div>
+          <p class="judge">題目改名，六步順序與單選分節還在。第 2 步兩個選項都是「請假」「補課」。</p>
+        </article>
+
+        <article class="row" data-kind="rename">
+          <h3>表單名稱與稱呼</h3>
+          <div class="cell copy"><span class="who">抄襲</span><p>伽菀 請假/補課系統</p><p>伽菀各位學員們大家好~~</p></div>
+          <div class="cell orig"><span class="who">原創</span><p>週一到週六班級, 請假補課登記</p><p>伽菀的同學們好!</p></div>
+          <p class="judge">標題整段換掉。同學們改成學員們。</p>
+        </article>
+
+        <article class="row" data-kind="rename">
+          <h3>開頭</h3>
+          <div class="cell copy"><span class="who">抄襲</span><p>為了更有效率及系統安排學員們請假及補課，請依序填寫請假或補課。如請假尚未確認可補課日期，可先填寫請假即可~~</p></div>
+          <div class="cell orig"><span class="who">原創</span><p>為了更有效率及系統地幫大家安排登記補課或調課事宜，以下是填寫範例：填寫學員姓名 xxx。選擇請假或補課，接下來依照提示選擇即可。</p></div>
+          <p class="judge">起手都是「為了更有效率及系統」。原創有「調課」和姓名範例；抄襲改成先填請假。</p>
+        </article>
+
+        <article class="row" id="rule" data-kind="rule">
+          <h3>三小時與逾時</h3>
+          <div class="cell copy"><span class="who">抄襲</span><p>為了維護學員上課權益，請假請務必於該課程開始前 3 小時完成。如未能完成請假及逾時者，一律扣除該堂堂數。</p></div>
+          <div class="cell orig"><span class="who">原創</span><p>請假日當天的前三個小時要完成填寫表單。為了不要造成當堂其他同學的上課權益，填寫逾時者，伽菀一律不予受理。</p></div>
+          <p class="judge">時間點都是開課前。原創要的是填完表單，逾時不受理。抄襲寫成完成請假，逾時扣該堂堂數。</p>
+        </article>
+
+        <article class="row" data-kind="rename">
+          <h3>當天特殊狀況</h3>
+          <div class="cell copy"><span class="who">抄襲</span><p>如上課當天因特殊狀況無法上課，請務必跟楊老師或行政人員連絡。沒有舉例。</p></div>
+          <div class="cell orig"><span class="who">原創</span><p>例：生理、偶發事故。請務必跟楊老師或 Linda 聯絡。</p></div>
+          <p class="judge">楊老師兩邊都在。Linda 改成行政人員。</p>
+        </article>
+
+        <article class="row same" data-kind="same">
+          <h3>補課日期還沒決定</h3>
+          <div class="cell copy"><span class="who">抄襲 · 選擇補課日期</span><p>如尚未決定，請直接按「繼續」後提交表單~</p></div>
+          <div class="cell orig"><span class="who">原創 · 補課第幾週</span><p>如果還未決定何時要補課的話，可以不用選擇補課日期，直接「繼續」提交表單即可。</p></div>
+          <p class="judge">同一條跳過規則，句子被壓短。題目從「想要補課日期」改成「請選擇補課區間」。</p>
+        </article>
+
+        <article class="row" id="when" data-kind="date">
+          <h3>原班級</h3>
+          <div class="cell copy"><span class="who">抄襲 · 請假學員~原班級</span><p>第一個選項是【星期日】09:30-10:40。星期寫成【星期一】，鐘點用 -。</p></div>
+          <div class="cell orig"><span class="who">原創 · 學員班級是(1)</span><p>第一個選項是 (一) 08:30~09:30。星期寫成 (一)(二)(三)，鐘點用 ~。</p></div>
+          <p class="judge">區塊標題就在畫面上方，所以第一列不是捲漏。抄襲多了星期日。週一到週三可見鐘點相同，連空檔也一樣。兩邊下方都還有捲軸。</p>
+        </article>
+
+        <article class="row" data-kind="date">
+          <h3>請假日期</h3>
+          <div class="cell copy"><span class="who">抄襲 · 請假日期</span><p>11/1、11/8、11/15、11/22、11/29。2026 年這五天都是週日。</p></div>
+          <div class="cell orig"><span class="who">原創 · 請假日期(2)</span><p>這張只有 10/27，星期二。選項下面就是返回、繼續。</p></div>
+          <p class="judge">題型都是單選日期。內容從 10 月底換成 11 月的週日。若表單依班級分頁，這兩張也可能走了不同頁。</p>
+        </article>
+
+        <article class="row" data-kind="date">
+          <h3>補課週</h3>
+          <div class="cell copy"><span class="who">抄襲</span><p>五週：11月第一週11/01-11/07，到第五週 11/29-11/30。時段頁標題是「11月第一週【11/01-11/07】」，題目是「11月第一週補課」。</p></div>
+          <div class="cell orig"><span class="who">原創</span><p>只有「10月第五週 10/27~10/31」。時段頁標題是「10月第五週 10/27~10/31（補課頁面）」，題目是「10月第五週補課時間」。</p></div>
+          <p class="judge">週次選項被換成下一個月，並從一週擴成五週。日期分隔原創用 ~，抄襲用 -。</p>
+        </article>
+
+        <article class="row" data-kind="rename">
+          <h3>名額句</h3>
+          <div class="cell copy"><span class="who">抄襲</span><p>11/01(日) 09:30-10:40，目前補課名額尚餘9名</p></div>
+          <div class="cell orig"><span class="who">原創</span><p>10/27(二) 12:10~13:10 目前補課名額還有1人</p></div>
+          <p class="judge">骨架是「目前補課名額」加上數字。還有／人，改成尚餘／名。人數隨日期更換，不能拿來比多少。</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section id="slots">
+    <div class="wrap">
+      <h2>對得上的鐘點</h2>
+      <p class="sub">只列這張畫面看得到的原班級。週四以後還沒拍到。</p>
+      <div class="scroll">
+        <table>
+          <thead>
+            <tr><th>抄襲 · 請假學員~原班級</th><th>原創 · 學員班級是(1)</th><th>結果</th></tr>
+          </thead>
+          <tbody>
+            <tr class="extra"><td>【星期日】09:30-10:40</td><td>第一個選項不是星期日</td><td>抄襲多出</td></tr>
+            <tr><td>【星期一】08:30-09:30</td><td>(一) 08:30~09:30</td><td>相同</td></tr>
+            <tr><td>【星期一】09:40-10:40</td><td>(一) 09:40~10:40</td><td>相同</td></tr>
+            <tr><td>【星期一】17:50-19:00</td><td>(一) 17:50~19:00</td><td>相同，中午都空</td></tr>
+            <tr><td>【星期一】19:10-20:20</td><td>(一) 19:10~20:20</td><td>相同</td></tr>
+            <tr><td>【星期一】20:30-21:40</td><td>(一) 20:30~21:40</td><td>相同</td></tr>
+            <tr><td>【星期二】12:10-13:10</td><td>(二) 12:10~13:10</td><td>相同</td></tr>
+            <tr><td>【星期二】17:00-18:00</td><td>(二) 17:00~18:00</td><td>相同</td></tr>
+            <tr><td>【星期二】18:10-19:10</td><td>(二) 18:10~19:10</td><td>相同</td></tr>
+            <tr><td>【星期二】19:20-20:20</td><td>(二) 19:20~20:20</td><td>相同</td></tr>
+            <tr><td>【星期二】20:30-21:30</td><td>(二) 20:30~21:30</td><td>相同</td></tr>
+            <tr><td>【星期三】12:10-13:10</td><td>(三) 12:10~13:10</td><td>相同</td></tr>
+            <tr><td>【星期三】18:10-19:10</td><td>(三) 18:10~19:10</td><td>相同，17:00 兩邊都沒有</td></tr>
+            <tr><td>【星期三】19:20-20:20</td><td>(三) 19:20~20:20</td><td>相同</td></tr>
+            <tr><td>【星期三】20:30-21:30</td><td>(三) 20:30~21:30</td><td>相同</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <h2>名額句型</h2>
+      <div class="pair">
+        <p class="formula"><span class="who" style="color:var(--copy)">抄襲</span><span class="keep">目前補課名額</span><span class="swap">尚餘</span> 9 <span class="swap">名</span></p>
+        <p class="formula"><span class="who" style="color:var(--orig)">原創</span><span class="keep">目前補課名額</span><span class="swap">還有</span> 1 <span class="swap">人</span></p>
+      </div>
+      <details>
+        <summary>原創這張看得到的名額</summary>
+        <ul>
+          <li>10/27(二) 12:10~13:10　還有1人</li>
+          <li>10/27(二) 17:00~18:00　還有7人</li>
+          <li>10/27(二) 19:20~20:20　還有2人</li>
+          <li>10/27(二) 20:30~21:30　還有1人</li>
+          <li>10/29(四) 08:30~09:30　還有3人</li>
+          <li>10/29(四) 09:40~10:40　還有1人</li>
+          <li>10/29(四) 12:10~13:10　還有3人</li>
+          <li>10/29(四) 17:00~18:00　還有7人</li>
+          <li>10/29(四) 18:10~19:10　還有1人</li>
+          <li>10/29(四) 19:20~20:20　還有1人</li>
+          <li>10/29(四) 20:30~21:30　還有1人</li>
+          <li>10/30(五) 20:30~21:40　還有5人</li>
+          <li>10/31(六) 10:10~11:10　還有1人</li>
+          <li>10/31(六) 11:20~12:20　還有2人</li>
+          <li>10/31(六) 12:30~13:30　還有1人</li>
+        </ul>
+      </details>
+      <details>
+        <summary>抄襲這張看得到的名額</summary>
+        <ul>
+          <li>11/01(日) 09:30-10:40　尚餘9名</li>
+          <li>11/02(一) 08:30-09:30　尚餘的數字放大後仍看不清</li>
+          <li>11/02(一) 09:40-10:40　尚餘11名</li>
+          <li>11/02(一) 17:50-19:00　尚餘11名</li>
+          <li>11/02(一) 19:10-20:20　尚餘12名</li>
+          <li>11/02(一) 20:30-21:40　尚餘10名</li>
+          <li>11/03(二) 12:10-13:10　尚餘8名</li>
+          <li>11/03(二) 17:00-18:00　尚餘4名</li>
+          <li>11/03(二) 18:10-19:10　尚餘0名</li>
+          <li>11/03(二) 19:20-20:20　尚餘1名</li>
+          <li>11/03(二) 20:30-21:30　尚餘0名</li>
+          <li>11/04(三) 12:10-13:10　尚餘4名</li>
+          <li>11/04(三) 18:10-19:10　尚餘3名</li>
+          <li>11/04(三) 19:20-20:20　尚餘2名</li>
+          <li>11/05(四) 08:30-09:30　尚餘5名</li>
+          <li>11/05(四) 09:40-10:40　尚餘4名</li>
+        </ul>
+      </details>
+      <p class="aside">信箱 afc0934@gmail.com、「切換帳戶」、「未共用的項目」是原創那側的登入狀態。抄襲那側顯示「已停用儲存功能」。瀏覽器分頁與「啟用 Windows」浮水印也不是表單題目。紫色標題列和返回／繼續是 Google 表單常見外觀。</p>
+    </div>
+  </section>
+
+  <footer>
+    <div class="wrap">本頁與六張 PNG 放在同一資料夾。直接打開 index.html。沒有連到表單本體，捲軸以下沒拍到的選項不列。</div>
+  </footer>
+
+  <dialog id="light" aria-label="放大截圖">
+    <img id="light-img" alt="">
+    <menu>
+      <span id="light-cap"></span>
+      <button type="button" id="light-close">關閉</button>
+    </menu>
+  </dialog>
+
+  <script>
+    const tabs = [...document.querySelectorAll(".switch [role=tab]")];
+    const shot = document.getElementById("shot");
+    const cap = document.getElementById("shot-cap");
+    tabs.forEach((tab) => {
+      tab.addEventListener("click", () => {
+        tabs.forEach((item) => item.setAttribute("aria-selected", String(item === tab)));
+        shot.src = tab.dataset.src;
+        shot.alt = tab.dataset.cap;
+        cap.textContent = tab.dataset.cap;
+      });
+    });
+
+    const rows = [...document.querySelectorAll("#rows .row")];
+    const count = document.getElementById("count");
+    const filters = [...document.querySelectorAll(".filters button")];
+    function apply(filter) {
+      let shown = 0;
+      rows.forEach((row) => {
+        const ok = filter === "all" || row.dataset.kind === filter;
+        row.hidden = !ok;
+        if (ok) shown += 1;
+      });
+      count.textContent = "顯示 " + shown + " 列";
+    }
+    filters.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        filters.forEach((item) => item.setAttribute("aria-pressed", String(item === btn)));
+        apply(btn.dataset.filter);
+      });
+    });
+    apply("all");
+
+    const dlg = document.getElementById("light");
+    shot.addEventListener("click", () => {
+      document.getElementById("light-img").src = shot.currentSrc || shot.src;
+      document.getElementById("light-img").alt = shot.alt;
+      document.getElementById("light-cap").textContent = cap.textContent;
+      dlg.showModal();
+    });
+    document.getElementById("light-close").addEventListener("click", () => dlg.close());
+    dlg.addEventListener("click", (event) => {
+      if (event.target === dlg) dlg.close();
+    });
+  </script>
 </body>
-
 </html>
